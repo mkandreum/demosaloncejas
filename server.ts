@@ -242,12 +242,27 @@ async function startServer() {
         JSON.stringify([])
       );
     db.prepare("INSERT INTO locations (id, name, address, morningHours, afternoonHours, blockedDays, blockedShifts) VALUES (?, ?, ?, ?, ?, ?, ?)")
-      .run("alicante", "Alicante", "Avenida de Alfonso El Sabio 5, Alicante", 
+      .run("sevilla", "Sevilla", "Calle Sierpes 45, Sevilla", 
         JSON.stringify(["09:00", "10:00", "11:00", "12:00", "13:00"]), 
         JSON.stringify(["15:00", "16:00", "17:00", "18:00", "19:00", "20:00"]),
         JSON.stringify([]),
         JSON.stringify([])
       );
+  }
+
+  // Migration: Rename Alicante to Sevilla in locations if present
+  try {
+    const tableExists = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='locations'").get();
+    if (tableExists) {
+      const alicanteExists = db.prepare("SELECT COUNT(*) as count FROM locations WHERE id = 'alicante'").get() as { count: number };
+      if (alicanteExists.count > 0) {
+        db.prepare("UPDATE locations SET id = 'sevilla', name = 'Sevilla', address = 'Calle Sierpes 45, Sevilla' WHERE id = 'alicante'").run();
+        db.prepare("UPDATE appointments SET locationId = 'sevilla' WHERE locationId = 'alicante'").run();
+        console.log("Migration: Renamed Alicante to Sevilla successfully.");
+      }
+    }
+  } catch (e) {
+    console.error("Migration Alicante to Sevilla error:", e);
   }
 
   // Migration: Add locationId column to appointments if it doesn't exist
