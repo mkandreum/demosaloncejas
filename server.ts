@@ -206,7 +206,7 @@ async function startServer() {
   const configCount = db.prepare("SELECT COUNT(*) as count FROM config").get() as { count: number };
   if (configCount.count === 0) {
     db.prepare("INSERT INTO config (id, bannerUrl, morningHours, afternoonHours, massageTypes, address, phone, tagline) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
-      .run(1, "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80", 
+      .run(1, "https://media.istockphoto.com/id/1340856746/es/foto/el-maquillador-realiza-un-procedimiento-de-depilaci%C3%B3n-facial-hermosa-chica-con-ojos-azules-con.jpg?s=612x612&w=0&k=20&c=FtUdNKaPY-yWj6J9pmwIWjqVLukhCAyA6hN1NO6dVtM=", 
         JSON.stringify(["09:00", "10:00", "11:00", "12:00", "13:00"]), 
         JSON.stringify(["15:00", "16:00", "17:00", "18:00", "19:00", "20:00"]),
         JSON.stringify([

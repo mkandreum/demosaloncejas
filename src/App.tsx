@@ -122,6 +122,7 @@ export default function App() {
   const [showSideMenu, setShowSideMenu] = useState(false);
   const [showServices, setShowServices] = useState(false);
   const [activeShift, setActiveShift] = useState<"morning" | "afternoon">("morning");
+  const [loadingSlots, setLoadingSlots] = useState(false);
   const [formData, setFormData] = useState({ clientName: "", clientEmail: "", clientPhone: "", massageType: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [adminRescheduleSlot, setAdminRescheduleSlot] = useState<Date | null>(null);
@@ -792,7 +793,13 @@ export default function App() {
               return (
                 <button
                   key={day.toISOString()}
-                  onClick={() => setSelectedDate(day)}
+                  onClick={() => {
+                    if (!isSameDay(day, selectedDate)) {
+                      setLoadingSlots(true);
+                      setSelectedDate(day);
+                      setTimeout(() => setLoadingSlots(false), 300);
+                    }
+                  }}
                   disabled={past}
                   className={cn(
                     "flex flex-col items-center justify-center min-w-[55px] h-[80px] rounded-[16px] transition-all duration-500 border group relative",
@@ -821,7 +828,13 @@ export default function App() {
                 return (
                   <button
                     key={loc.id}
-                    onClick={() => setSelectedLocation(loc)}
+                    onClick={() => {
+                      if (selectedLocation?.id !== loc.id) {
+                        setLoadingSlots(true);
+                        setSelectedLocation(loc);
+                        setTimeout(() => setLoadingSlots(false), 350);
+                      }
+                    }}
                     className={cn(
                       "flex-1 py-3 px-4 flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-widest z-10 transition-all relative cursor-pointer whitespace-nowrap",
                       isSelected ? "text-spa-base font-extrabold" : "text-[#7A7D7B]"
@@ -868,9 +881,9 @@ export default function App() {
               <motion.div 
                 variants={containerVariants}
                 initial="hidden"
-                animate="show"
-                key={`morning-${selectedDate.toISOString()}`}
-                className="grid grid-cols-2 lg:grid-cols-3 gap-4"
+                animate={loadingSlots ? "hidden" : "show"}
+                key={`morning-${selectedLocation?.id || "default"}-${selectedDate.toISOString()}`}
+                className={cn("grid grid-cols-2 lg:grid-cols-3 gap-4 transition-all duration-300", loadingSlots ? "opacity-30 blur-[2px]" : "opacity-100")}
               >
                 {getAvailableSlots("morning").map(renderSlot)}
               </motion.div>
@@ -885,9 +898,9 @@ export default function App() {
               <motion.div 
                 variants={containerVariants}
                 initial="hidden"
-                animate="show"
-                key={`afternoon-${selectedDate.toISOString()}`}
-                className="grid grid-cols-2 lg:grid-cols-3 gap-4"
+                animate={loadingSlots ? "hidden" : "show"}
+                key={`afternoon-${selectedLocation?.id || "default"}-${selectedDate.toISOString()}`}
+                className={cn("grid grid-cols-2 lg:grid-cols-3 gap-4 transition-all duration-300", loadingSlots ? "opacity-30 blur-[2px]" : "opacity-100")}
               >
                 {getAvailableSlots("afternoon").map(renderSlot)}
               </motion.div>
