@@ -370,7 +370,7 @@ async function startServer() {
         <!-- HEADER -->
         <tr>
           <td style="background:#262021;padding:30px 40px;border-bottom:1px solid rgba(176,130,117,0.2);">
-            <p style="margin:0;font-family:Georgia,serif;font-size:28px;color:#FAF5F2;letter-spacing:1px;">JP Brow Studio</p>
+            <p style="margin:0;font-family:Georgia,serif;font-size:28px;color:#FAF5F2;letter-spacing:1px;">Llanos Studio</p>
             <p style="margin:4px 0 0;font-size:11px;color:#B08275;letter-spacing:3px;text-transform:uppercase;">Brow & Lash Design</p>
             <p style="margin:6px 0 0;font-size:10px;color:#DEC5B9;letter-spacing:2px;font-style:italic;">${escapeHtml(config.tagline || 'Diseño y arquitectura de tu mirada')}</p>
           </td>
@@ -398,7 +398,7 @@ async function startServer() {
                     </tr>
                     <tr>
                       <td style="font-size:10px;color:#B08275;text-transform:uppercase;letter-spacing:1px;font-weight:700;">Ubicación</td>
-                      <td style="font-size:14px;color:#FAF5F2;font-weight:500;">${escapeHtml(locationStr || 'JP Brow Studio')}</td>
+                      <td style="font-size:14px;color:#FAF5F2;font-weight:500;">${escapeHtml(locationStr || 'Llanos Studio')}</td>
                     </tr>
                   </table>
                 </td>
@@ -413,7 +413,7 @@ async function startServer() {
         <!-- FOOTER -->
         <tr>
           <td style="padding:20px 40px;border-top:1px solid rgba(255,255,255,0.06);background:#130E0F;text-align:center;">
-            <p style="margin:0;font-size:11px;color:#5A5D5B;">© 2026 JP Brow Studio. Todos los derechos reservados.</p>
+            <p style="margin:0;font-size:11px;color:#5A5D5B;">© 2026 Llanos Studio. Todos los derechos reservados.</p>
           </td>
         </tr>
 
@@ -443,7 +443,7 @@ async function startServer() {
   // NO codificar el HTML en base64 — mandarlo como UTF-8 directamente
   const message = [
     `To: ${to}`,
-    `From: "JP Brow Studio" <${fromEmail}>`,
+    `From: "Llanos Studio" <${fromEmail}>`,
     `Subject: =?utf-8?B?${encodedSubject}?=`,
     `MIME-Version: 1.0`,
     `Content-Type: text/html; charset=utf-8`,
@@ -666,7 +666,7 @@ async function startServer() {
     let eventId = null;
 
     const loc = db.prepare("SELECT * FROM locations WHERE id = ?").get(locationId) as any;
-    const locationStr = loc ? `${loc.name} - ${loc.address}` : "JP Brow Studio";
+    const locationStr = loc ? `${loc.name} - ${loc.address}` : "Llanos Studio";
 
     const tokens = getAdminTokens();
     if (tokens) {
@@ -721,7 +721,7 @@ async function startServer() {
         massageType || 'Diseño de Cejas',
         locationStr
       );
-      sendEmail(clientEmail, "Confirmación de Cita - JP Brow Studio", clientHtml).catch(e => console.error("Email error:", e));
+      sendEmail(clientEmail, "Confirmación de Cita - Llanos Studio", clientHtml).catch(e => console.error("Email error:", e));
 
       // Email to admin
       const adminEmail = getAdminEmail();
@@ -730,7 +730,7 @@ async function startServer() {
           "Nueva Reserva",
           `<p>Has recibido una nueva reserva de cejas de <span style="color: #FAF5F2;">${escapeHtml(clientName)}</span>.</p>
            <p>Ubicación: ${escapeHtml(locationStr)}<br>Email: ${escapeHtml(clientEmail)}<br>Tel: ${escapeHtml(clientPhone || 'No prop.')}<br>Servicio: ${escapeHtml(massageType || 'Diseño de Cejas')}</p>`,
-          "JP Brow Studio Admin",
+          "Llanos Studio Admin",
           dateStr,
           id,
           massageType || 'Diseño de Cejas',
@@ -792,7 +792,7 @@ async function startServer() {
           id,
           appt.massageType
         );
-        await sendEmail(appt.clientEmail, "Actualización de tu Cita - JP Brow Studio", html);
+        await sendEmail(appt.clientEmail, "Actualización de tu Cita - Llanos Studio", html);
 
         // FIX: Use stored admin email instead of calling Gmail API (avoids failure on expired token)
         const adminEmail = getAdminEmail();
@@ -801,7 +801,7 @@ async function startServer() {
             "Cita Reagendada",
             `<p>La cita de <span style="color: #F9F8F6;">${escapeHtml(appt.clientName)}</span> ha sido modificada.</p>
              <p>Nuevo horario: ${dateStr}<br>Email: ${escapeHtml(appt.clientEmail)}</p>`,
-            "Admin JP Brow Studio",
+            "Admin Llanos Studio",
             dateStr
           );
           await sendEmail(adminEmail, `Cita Reagendada: ${appt.clientName}`, adminHtml);
@@ -838,7 +838,7 @@ async function startServer() {
           appt.clientName,
           dateStr
         );
-        await sendEmail(appt.clientEmail, "Cita Cancelada - JP Brow Studio", html);
+        await sendEmail(appt.clientEmail, "Cita Cancelada - Llanos Studio", html);
 
         // FIX: Use stored admin email instead of calling Gmail API (avoids failure on expired token)
         const adminEmail = getAdminEmail();
@@ -847,7 +847,7 @@ async function startServer() {
             "Cita Cancelada",
             `<p>La cita de <span style="color: #F9F8F6;">${escapeHtml(appt.clientName)}</span> ha sido cancelada.</p>
              <p>Fecha: ${dateStr}<br>Email: ${escapeHtml(appt.clientEmail)}${reason ? `<br>Motivo: ${escapeHtml(reason)}` : ''}</p>`,
-            "Admin JP Brow Studio",
+            "Admin Llanos Studio",
             dateStr
           );
           await sendEmail(adminEmail, `Cita Cancelada: ${appt.clientName}`, adminHtml);
@@ -889,7 +889,7 @@ async function startServer() {
     if (!tokens) return res.status(401).json({ error: "Google no conectado" });
 
     const loc = db.prepare("SELECT * FROM locations WHERE id = ?").get(appt.locationId) as any;
-    const locationStr = loc ? `${loc.name} - ${loc.address}` : "JP Brow Studio";
+    const locationStr = loc ? `${loc.name} - ${loc.address}` : "Llanos Studio";
 
     const dateStr = new Date(appt.startTime).toLocaleString('es-ES', {
       weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Madrid'
@@ -917,7 +917,7 @@ async function startServer() {
     );
 
     try {
-      await sendEmail(appt.clientEmail, "Confirmación de Cita - JP Brow Studio", html);
+      await sendEmail(appt.clientEmail, "Confirmación de Cita - Llanos Studio", html);
       res.json({ success: true });
     } catch (e) {
       console.error("Resend email error:", e);
@@ -942,18 +942,18 @@ async function startServer() {
     const cfg = getConfig();
     const loc = db.prepare("SELECT * FROM locations WHERE id = ?").get(appt.locationId) as any;
     const address = loc ? loc.address : cfg.address;
-    const locationStr = loc ? `${loc.name} - ${loc.address}` : "JP Brow Studio";
+    const locationStr = loc ? `${loc.name} - ${loc.address}` : "Llanos Studio";
 
     let subject = "";
     let content = "";
 
     switch (template) {
       case "reminder":
-        subject = "Recordatorio de tu Cita - JP Brow Studio";
+        subject = "Recordatorio de tu Cita - Llanos Studio";
         content = "<p>Te recordamos que tienes una cita próxima en nuestro estudio. Estaremos encantados de recibirte para brindarte el mejor servicio de diseño de cejas y estética.</p><p>Por favor, confirma que podrás asistir o, si necesitas realizar algún cambio, utiliza el enlace de gestión que encontrarás más abajo.</p>";
         break;
       case "address":
-        subject = "Dirección del Estudio - JP Brow Studio";
+        subject = "Dirección del Estudio - Llanos Studio";
         content = `<p>Tu cita está a punto de comenzar. Aquí tienes la dirección de nuestro estudio para que puedas llegar sin problemas:</p>
             <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}" target="_blank" style="text-decoration:none;">
               <div style="background:#262021;border:1px solid rgba(176,130,117,0.15);border-radius:12px;padding:24px;margin:25px 0;text-align:center;">
@@ -964,7 +964,7 @@ async function startServer() {
             <p style="font-size:14px;color:#A0A3A1;line-height:1.6;">Te esperamos para realzar tu mirada.</p>`;
         break;
       default:
-        subject = "Mensaje de tu Esteticista - JP Brow Studio";
+        subject = "Mensaje de tu Esteticista - Llanos Studio";
         content = customText
           ? `<p>${escapeHtml(customText).replace(/\n/g, '</p><p>')}</p>`
           : "<p>Mensaje de parte de tu esteticista.</p>";
@@ -1088,7 +1088,7 @@ async function startServer() {
           id,
           appt.massageType
         );
-        await sendEmail(appt.clientEmail, "Cita Reagendada - JP Brow Studio", html);
+        await sendEmail(appt.clientEmail, "Cita Reagendada - Llanos Studio", html);
       } catch (e) { console.error(e); }
     }
 
@@ -1130,7 +1130,7 @@ async function startServer() {
           appt.clientName,
           dateStr
         );
-        await sendEmail(appt.clientEmail, "Cita Cancelada - JP Brow Studio", html);
+        await sendEmail(appt.clientEmail, "Cita Cancelada - Llanos Studio", html);
         
         const adminEmail = getAdminEmail();
         if (adminEmail) {
@@ -1138,7 +1138,7 @@ async function startServer() {
             "Cita Cancelada",
             `<p>La cita de <span style="color: #F9F8F6;">${escapeHtml(appt.clientName)}</span> ha sido cancelada por el cliente a través del asistente virtual.</p>
              <p>Horario cancelado: ${dateStr}<br>Email: ${escapeHtml(appt.clientEmail)}</p>`,
-            "Admin JP Brow Studio",
+            "Admin Llanos Studio",
             dateStr
           );
           await sendEmail(adminEmail, `Cita Cancelada: ${appt.clientName}`, adminHtml);
@@ -1162,7 +1162,7 @@ async function startServer() {
        const chat = ai.chats.create({
          model: "gemini-1.5-flash",
          config: {
-           systemInstruction: `Eres el Asistente Concierge de JP Brow Studio.
+           systemInstruction: `Eres el Asistente Concierge de Llanos Studio.
              Tu objetivo es ayudar a los clientes con sus reservas de depilación y diseño de cejas de forma profesional y elegante.
              
              SERVICIOS DISPONIBLES:
@@ -1243,7 +1243,7 @@ async function startServer() {
                       appt.id,
                       appt.massageType
                     );
-                    await sendEmail(appt.clientEmail, "Cita Reagendada - JP Brow Studio", html);
+                    await sendEmail(appt.clientEmail, "Cita Reagendada - Llanos Studio", html);
                   } catch (e) { console.error("AI reschedule email error:", e); }
                 }
               }
@@ -1281,7 +1281,7 @@ async function startServer() {
         try {
           const loc = db.prepare("SELECT * FROM locations WHERE id = ?").get(appt.locationId) as any;
           const address = loc ? loc.address : cfg.address;
-          const locationStr = loc ? `${loc.name} - ${loc.address}` : "JP Brow Studio";
+          const locationStr = loc ? `${loc.name} - ${loc.address}` : "Llanos Studio";
 
           if (!address) continue;
 
@@ -1312,7 +1312,7 @@ async function startServer() {
             locationStr
           );
 
-          await sendEmail(appt.clientEmail, "📍 Dirección del Estudio - JP Brow Studio", addressHtml);
+          await sendEmail(appt.clientEmail, "📍 Dirección del Estudio - Llanos Studio", addressHtml);
           db.prepare("UPDATE appointments SET addressSent = 1 WHERE id = ?").run(appt.id);
           console.log(`Address email sent for appointment ${appt.id}`);
         } catch (e) {
@@ -1348,7 +1348,7 @@ async function startServer() {
       for (const appt of reminder6hRows) {
         try {
           const loc = db.prepare("SELECT * FROM locations WHERE id = ?").get(appt.locationId) as any;
-          const locationStr = loc ? `${loc.name} - ${loc.address}` : "JP Brow Studio";
+          const locationStr = loc ? `${loc.name} - ${loc.address}` : "Llanos Studio";
 
           const dateStr = new Date(appt.startTime).toLocaleString('es-ES', {
             weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Madrid'
@@ -1373,7 +1373,7 @@ async function startServer() {
             appt.massageType,
             locationStr
           );
-          await sendEmail(appt.clientEmail, "Recordatorio: Confirma tu cita - JP Brow Studio", reminderHtml);
+          await sendEmail(appt.clientEmail, "Recordatorio: Confirma tu cita - Llanos Studio", reminderHtml);
           db.prepare("UPDATE appointments SET reminder6hSent = 1 WHERE id = ?").run(appt.id);
           console.log(`Reminder 6h sent for appointment ${appt.id}`);
         } catch (e) {
@@ -1393,7 +1393,7 @@ async function startServer() {
       for (const appt of reminder2hRows) {
         try {
           const loc = db.prepare("SELECT * FROM locations WHERE id = ?").get(appt.locationId) as any;
-          const locationStr = loc ? `${loc.name} - ${loc.address}` : "JP Brow Studio";
+          const locationStr = loc ? `${loc.name} - ${loc.address}` : "Llanos Studio";
 
           const dateStr = new Date(appt.startTime).toLocaleString('es-ES', {
             weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Madrid'
@@ -1418,7 +1418,7 @@ async function startServer() {
             appt.massageType,
             locationStr
           );
-          await sendEmail(appt.clientEmail, "⏰ Tu cita es pronto - JP Brow Studio", reminderHtml);
+          await sendEmail(appt.clientEmail, "⏰ Tu cita es pronto - Llanos Studio", reminderHtml);
           db.prepare("UPDATE appointments SET reminder2hSent = 1 WHERE id = ?").run(appt.id);
           console.log(`Reminder 2h sent for appointment ${appt.id}`);
         } catch (e) {

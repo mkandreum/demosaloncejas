@@ -763,7 +763,7 @@ export default function App() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(201,169,110,0.15),transparent_70%)]" />
           <div className="absolute top-0 left-0 right-0 p-8 flex justify-between items-start z-20">
             <div className="flex flex-col">
-              <h1 className="text-3xl md:text-4xl font-serif text-spa-crema tracking-tight">JP Brow Studio</h1>
+              <h1 className="text-3xl md:text-4xl font-serif text-spa-crema tracking-tight">Llanos Studio</h1>
               <div className="h-0.5 w-10 bg-spa-gold mt-2 mb-1.5" />
               <p className="text-[8px] font-bold text-spa-gold uppercase tracking-[0.4em]">Brow Design Studio</p>
               {config.tagline && <p className="text-[9px] text-spa-gold/70 italic mt-1.5 tracking-wide">{config.tagline}</p>}
@@ -906,7 +906,7 @@ export default function App() {
               </button>
            </div>
            <div className="flex flex-col items-center">
-             <span className="text-sm font-serif text-spa-crema tracking-tight">JP Brows</span>
+             <span className="text-sm font-serif text-spa-crema tracking-tight">Llanos Studio</span>
              <span className="text-[7px] text-spa-gold font-bold uppercase tracking-[0.2em] -mt-0.5">Diseño & Belleza de Cejas</span>
            </div>
            <div className="flex-1 flex justify-end">
@@ -2114,7 +2114,7 @@ export default function App() {
                   <div className="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar">
                       <div className="self-start max-w-[85%] bg-spa-elevated p-5 rounded-2xl rounded-tl-sm text-sm font-light leading-relaxed border border-white/5 relative">
                           {botStep === "greeting" 
-                            ? "Hola, bienvenido. Soy el asistente de JP Brow Studio. ¿Cómo puedo ayudarte hoy?" 
+                            ? "Hola, bienvenido. Soy el asistente de Llanos Studio. ¿Cómo puedo ayudarte hoy?" 
                             : botStep === "massages" 
                             ? "Aquí tienes los servicios de diseño y depilación de cejas disponibles:" 
                             : botStep === "info" 
@@ -2145,7 +2145,7 @@ export default function App() {
                                   💬 Preguntas Frecuentes (FAQ)
                               </button>
                               <button onClick={() => setBotStep("contact")} className="w-full py-3.5 bg-spa-elevated border border-white/5 text-spa-crema rounded-xl text-[9px] font-bold uppercase tracking-widest hover:border-spa-gold transition-all flex items-center justify-center gap-2">
-                                  📞 Hablar con JP Brow Studio
+                                  📞 Hablar con Llanos Studio
                               </button>
                           </div>
                       )}
@@ -2431,7 +2431,7 @@ export default function App() {
                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-spa-gold to-spa-accent flex items-center justify-center text-spa-base shadow-lg">
                       <Leaf size={22} />
                     </div>
-                    <span className="text-[8px] font-bold text-spa-gold uppercase tracking-[0.3em]">JP Brows</span>
+                    <span className="text-[8px] font-bold text-spa-gold uppercase tracking-[0.3em]">Llanos Studio</span>
                   </div>
                   <div className="w-full space-y-2">
                     <button onClick={() => { setShowSideMenu(false); setShowBot(true); }} className="w-full flex items-center gap-3 p-3.5 bg-spa-elevated rounded-xl border border-white/5 hover:border-spa-gold/30 hover:bg-spa-accent/10 transition-all group">
