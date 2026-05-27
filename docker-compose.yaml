@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  jean-pierre-agenda:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # Coolify gestiona automáticamente la red externa y el dominio.
+    expose:
+      - "3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - APP_URL=${APP_URL}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+    volumes:
+      - jp-masajes-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  jp-masajes-data:
+    name: jp-masajes-data
